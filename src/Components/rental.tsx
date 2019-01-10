@@ -1,11 +1,12 @@
 import * as queryString from 'query-string';
 import * as React from 'react';
-import customHistory from 'src/history';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 
 
 
-interface IrentalProps{
+
+interface IrentalProps extends RouteComponentProps{
     name:string,
     }
 
@@ -19,9 +20,7 @@ class Rental extends React.Component<IrentalProps, any> {
         return stringfy.id;
     }
     public handleClick=()=>{
-        customHistory.replace("/movies");
-        
-    
+        this.props.history.push("/movies");
     }
     public render() { 
         return ( 
@@ -34,4 +33,4 @@ class Rental extends React.Component<IrentalProps, any> {
 
 }
  
-export default Rental;
+export default withRouter(Rental);

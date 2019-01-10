@@ -1,7 +1,6 @@
 
 import * as React from 'react';
-import {  Redirect, Route, Router, Switch } from 'react-router-dom';
-import customHistory from 'src/history';
+import {  BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import NavBar from './Components/BootNavBar';
 import LoginForm from './Components/loginform';
@@ -23,7 +22,7 @@ return <Rental name="asda"   />;
     return (
       <main className="container">
       
-      <Router history={customHistory}>
+      <BrowserRouter>
     <React.Fragment>
     <NavBar/>
 
@@ -37,7 +36,7 @@ return <Rental name="asda"   />;
     </Switch>
 
     </React.Fragment>
-  </Router>
+  </BrowserRouter>
       </main>
     );
   }
