@@ -1,17 +1,93 @@
+import * as Joi from 'joi';
 import * as React from 'react';
+import Input from './Common/input';
 
-class LoginForm extends React.Component<{}, {}> {
 
-     public userName:any;
+
+
+interface ILogin {
+    account:{
+        userName:string
+        password:string
+      }
+    errors:{
+        userName:string
+        password:string    
+     }
+}
+class LoginForm extends React.Component<{}, ILogin> {
+ 
+    public state={
+       account:{
+        password:'',
+        userName:'',
+        },
+        errors:{
+            password:'',
+            userName:'',
+         }
+
+        
+    }
+    public schme={
+        password:Joi.string().required(),
+        userName:Joi.string().required(),
+        
+    }
     constructor(props:string){
         super(props);
-         this.userName=React.createRef<HTMLInputElement>();
     }
-  public handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
-    e.preventDefault();
+    
+    
+
+  public validate=()=>{
+
+    const result=Joi.validate(this.state.account,this.schme)
 // tslint:disable-next-line: no-console
-    console.log( this.userName.current.value);
-   };
+    console.log(result);
+
+      const Errors={...this.state.errors};
+      Errors.password='';
+      Errors.userName='';
+      if(this.state.account.userName.trim()===''){
+          Errors.userName="username required.";
+      }
+      if(this.state.account.password.trim()===''){
+        Errors.password="Password required."
+    }
+    return Errors;
+  }
+  public validateProperty=(e:React.ChangeEvent<HTMLInputElement>)=>{
+    const Errors={...this.state.errors};
+    Errors.userName='';
+    Errors.password='';
+    if(this.state.account.userName==="mid"){
+        Errors.userName="mid not allowed";
+    }
+    
+    if(this.state.account.password==="mid"){
+        Errors.password="mid not allowed";
+    }
+    return Errors;
+  }
+ public handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
+
+    const account={...this.state.account};
+     account[e.currentTarget.name]=e.currentTarget.value;
+    this.setState({account});
+    const error=this.validateProperty(e);
+    this.setState({
+        errors:{userName:error.userName,password:error.password}
+    })
+     
+ }
+  public handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault(); 
+    const errors=this.validate();
+    this.setState({
+        errors:{userName:errors.userName,password:errors.password}
+    });
+}
   
 
    public render() { 
@@ -19,14 +95,19 @@ class LoginForm extends React.Component<{}, {}> {
             <div style={{paddingTop:100}}>
                <h1>Login</h1>
                <form onSubmit={this.handleSubmit}>
-                   <div className="form-group">
-                   <label htmlFor="username">username</label>
-                   <input id="username" ref={this.userName} type="text" className="form-control"/>
-                   </div>
-                   <div className="form-group">
-                   <label htmlFor="password">password</label
-                   ><input id="password" type="text" className="form-control"/>
-                   </div>
+                  <Input 
+                  autofocus={true}
+                   handleChange={this.handleChange}
+                    name="userName"
+                     value={this.state.account.userName} 
+                     type="text"
+                     error={this.state.errors.userName}/>
+                    <Input 
+                    error={this.state.errors.password}
+                   handleChange={this.handleChange}
+                    name="password"
+                     value={this.state.account.password} 
+                     type="password"/>
                    <button className="btn btn-primary">login</button>
                </form>
             </div>
