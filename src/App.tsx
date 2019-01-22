@@ -1,12 +1,15 @@
 
 import * as React from 'react';
 import {  BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css'
 import './App.css';
 import NavBar from './Components/BootNavBar';
 import LoginForm from './Components/loginform';
 import NotFound from './Components/notfound';
 import Rental from './Components/rental';
+import Users from './Components/users';
 import Movie from './Movies';
+
 
 
 
@@ -24,9 +27,11 @@ return <Rental name="asda"   />;
       
       <BrowserRouter>
     <React.Fragment>
+
     <NavBar/>
 
    <Switch>
+     <Route exact={true} path="/users" component={Users}/>
     <Route exact={true} path="/loginform" component={LoginForm}/>
     <Route  exact={true} path="/movies"  component={Movie} />
     <Route  exact={true} path="/Rental" render={this.renderRental} />
@@ -34,7 +39,7 @@ return <Rental name="asda"   />;
     <Route path="/" exact={true} component={Movie}/>
     <Redirect  to="/not-found"/>
     </Switch>
-
+ 
     </React.Fragment>
   </BrowserRouter>
       </main>

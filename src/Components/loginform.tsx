@@ -1,5 +1,6 @@
-import * as Joi from 'joi';
 import * as React from 'react';
+
+import Axios from 'axios';
 import Input from './Common/input';
 
 
@@ -29,11 +30,6 @@ class LoginForm extends React.Component<{}, ILogin> {
 
         
     }
-    public schme={
-        password:Joi.string().required(),
-        userName:Joi.string().required(),
-        
-    }
     constructor(props:string){
         super(props);
     }
@@ -42,9 +38,6 @@ class LoginForm extends React.Component<{}, ILogin> {
 
   public validate=()=>{
 
-    const result=Joi.validate(this.state.account,this.schme)
-// tslint:disable-next-line: no-console
-    console.log(result);
 
       const Errors={...this.state.errors};
       Errors.password='';
@@ -72,21 +65,33 @@ class LoginForm extends React.Component<{}, ILogin> {
   }
  public handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
 
+    
     const account={...this.state.account};
      account[e.currentTarget.name]=e.currentTarget.value;
-    this.setState({account});
+    this.setState({account},()=>{
+        const error=this.validateProperty(e);
+        this.setState({
+            errors:{userName:error.userName,password:error.password}
+        })
+    });
+    
+     
+ }
+
+ public validateF=(e:React.ChangeEvent<HTMLInputElement>)=>{
     const error=this.validateProperty(e);
     this.setState({
         errors:{userName:error.userName,password:error.password}
     })
-     
  }
-  public handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
+  public handleSubmit= async(e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault(); 
     const errors=this.validate();
     this.setState({
         errors:{userName:errors.userName,password:errors.password}
     });
+   // const obj={userName:this.state.account.userName,password:this.state.account.password};
+    await Axios.post('https://localhost:44390/api/Login',{"userName":'asdas',"password":'asdasd'});
 }
   
 
@@ -101,13 +106,16 @@ class LoginForm extends React.Component<{}, ILogin> {
                     name="userName"
                      value={this.state.account.userName} 
                      type="text"
-                     error={this.state.errors.userName}/>
+                     error={this.state.errors.userName}
+                     />
                     <Input 
                     error={this.state.errors.password}
                    handleChange={this.handleChange}
                     name="password"
                      value={this.state.account.password} 
-                     type="password"/>
+                     type="password"
+                    
+                     />
                    <button className="btn btn-primary">login</button>
                </form>
             </div>

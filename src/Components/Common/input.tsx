@@ -1,12 +1,14 @@
 import * as React from 'react';
 
+
 export interface ITextBoxProps {
     name:string,
     autofocus?:boolean,
     value:any,
     type:string,
     handleChange:any,
-    error?:string
+    error?:string,
+    validate?:any
 }
  
 const Input: React.FunctionComponent<ITextBoxProps> = (props) => {
@@ -19,6 +21,7 @@ const Input: React.FunctionComponent<ITextBoxProps> = (props) => {
           name={props.name}
           value={props.value}
           onChange={props.handleChange}
+          onBlur={props.validate}
         type={props.type}
         className="form-control"/>
         {props.error && <div className="alert alert-danger">{props.error}</div>}
