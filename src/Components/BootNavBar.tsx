@@ -33,6 +33,9 @@ class NavBar extends React.Component<any,any> {
           <li className="nav-item">
             <NavLink className="nav-link" exact={true}   to="/loginform">login<span className="sr-only">(current)</span></NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" exact={true}   to="/users">users<span className="sr-only">(current)</span></NavLink>
+          </li>
           
      
          
