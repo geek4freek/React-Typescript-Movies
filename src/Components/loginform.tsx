@@ -1,8 +1,10 @@
+
 import * as Joi from "joi";
 import * as React from "react";
 import { RouteComponentProps } from "react-router";
 import httpService from "./Common/httpService";
 import Input from "./Common/input";
+
 
 interface ILogin {
   account: {
@@ -35,6 +37,7 @@ class LoginForm extends React.Component<{} & RouteComponentProps, ILogin> {
 
   public validate = () => {
     // const result = Joi.validate(this.state.account, this.schme);
+
 
     const Errors = { ...this.state.errors };
     Errors.password = "";

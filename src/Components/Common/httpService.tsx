@@ -1,5 +1,4 @@
 import Axios from "axios";
-
 Axios.defaults.headers.common.authorize = getJwt();
 Axios.interceptors.response.use(
   undefined,
@@ -17,3 +16,4 @@ export default {
   post: Axios.post,
   put: Axios.put
 };
+

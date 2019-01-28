@@ -13,6 +13,13 @@ import Movie from "./Movies";
 
 interface Iappstate {
   name: string | null;
+
+class App extends React.Component {
+
+public renderRental=()=>{
+
+return <Rental name="asda"   />;
+
 }
 interface Ijwtpayload {
   iat: string;
@@ -72,6 +79,7 @@ class App extends React.Component<{}, Iappstate> {
             </Switch>
           </React.Fragment>
         </BrowserRouter>
+
       </main>
     );
   }

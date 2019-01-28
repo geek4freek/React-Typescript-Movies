@@ -89,6 +89,7 @@ class NavBar extends React.Component<any, INavBarProps> {
       </React.Fragment>
     );
   }
+
 }
 
 export default NavBar;
